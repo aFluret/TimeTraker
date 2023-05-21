@@ -11,10 +11,29 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
-function ProjectForm() {
+
+export const getProjects = async (url) => {
   let token = JSON.parse(localStorage.getItem("token"));
+  let res = await axios.get(url, {
+    headers: {
+      token: token,
+    },
+  });
+  // console.log("token:", token);
+  return res.data;
+};
+
+function ProjectForm({ location }) {
+  let token = JSON.parse(localStorage.getItem("token"));
+  const url = "http://localhost:8080/projects";
+  const [projectsList, setProjectList] = useState({});
+  const {state = {}} = useLocation();
+  const editingId = state?.id;
+  
+
 
   const initialProject = {
     projectname: "",
@@ -29,6 +48,21 @@ function ProjectForm() {
     teamMembers: [],
   };
   const [project, setProject] = useState(initialProject);
+
+  useEffect(async() => {
+    if(editingId){
+      const projects = await getProjects("http://localhost:8080/projects");
+      console.log(projects);
+      const aaa = (projects).filter((item)=> {
+        return item._id === editingId
+      })?.[0]
+      if(!!aaa)
+      setProject(aaa);
+    }
+    
+  }, []);
+
+
   const [team, setteam] = useState(initialProject.teamMembers);
   // const [radio, setRadio] = useState("1");
   const navigate = useNavigate("/dashboard/project");
@@ -77,11 +111,12 @@ function ProjectForm() {
             name="projectname"
             placeholder="Project Name"
             onChange={onChange}
+            value={project?.projectname}
           />
         </Box>
         <Box>
           <FormLabel>Client</FormLabel>
-          <Input name="clientName" placeholder="Client" onChange={onChange} />
+          <Input name="clientName" placeholder="Client" onChange={onChange} value={project?.clientName} />
         </Box>
         <Box>
           <FormLabel>Team members</FormLabel>
@@ -89,6 +124,7 @@ function ProjectForm() {
             name="teamMembers"
             placeholder="add team members i.e.: One, Two, Three..."
             onChange={onChange}
+            value={project?.teamMembers}
           />
         </Box>
         <Box>
@@ -97,6 +133,7 @@ function ProjectForm() {
             name="description"
             placeholder="Description..."
             onChange={onChange}
+            value={project?.description}
           />
         </Box>
 

@@ -26,7 +26,7 @@ export default function Logout({ userName }) {
             marginLeft: "-90px",
             fontSize: "18px",
           }}
-          class="bi bi-person"
+          className="bi bi-person"
         ></i>
 
         <Text ml="5%">{userName}</Text>

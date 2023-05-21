@@ -27,30 +27,20 @@ function DetailPage() {
 
   const handleChange = (e) => {
     const { name, value, type } = e.target;
-    console.log(type, 11);
 
     const val = (type === 'number') ? +value : value;
-    setData({...data,[name]:val})
-  
-      // setData({
-      //   ...data,
-      //   [name]: value,
-      // });
-    
+    setData({...data,[name]:val})    
   };
 
   const handleClick = () => {
     maindata.isAuthData = {
       ...maindata.isAuthData,
 
-      companyName: data.companyName,
-      companySize: data.companySize,
-      country: data.country,
+      job: data.job,
       mobileNumber: data.mobileNumber,
     };
     // console.log(maindata.isAuthData);
-    dispatch(SignUp(maindata.isAuthData));
-       
+    dispatch(SignUp(maindata.isAuthData));   
   };
 
   return (
@@ -59,44 +49,29 @@ function DetailPage() {
         <Image
           align={"left"}
           w="200px"
-          src="https://app.myhours.com/assets/myhours_app_logo_icon.svg"
+          src="https://img.freepik.com/premium-vector/clock-vector-illustration-on-white-background-office-clock-illustration-countdown-clock-counter-timer-countdown-art-design-eps-10_158224-116.jpg"
           alt="company logo"
         />
         <br />
         <Heading as="h3" size="lg" fontWeight={"600"} align={"left"}>
-          Details about your company
+          Детали сотрудника
         </Heading>
         <br />
         <FormControl>
-          <FormLabel>COMPANY NAME</FormLabel>
-
-          <Input type="text" onChange={handleChange} name="companyName" />
-          <FormLabel>COUNTRY</FormLabel>
-          <Text align={"left"} mb="1%">
-            We will adapt your experience to the specifics region
-          </Text>
+          <FormLabel>Должность</FormLabel>
           <Select
             mb="1%"
             bgColor={"#dceefa"}
             onChange={handleChange}
-            name="country"
+            name="job"
           >
-            <option>Select</option>
-            <option value="India">India</option>
-            <option value="USA">USA</option>
-            <option value="China">China</option>
+            <option>Выберите должность</option>
+            <option value="Инспектор">Инспектор</option>
+            <option value="Экономист">Экономист</option>
+            <option value="Бухгалтер">Бухгалтер</option>
           </Select>
 
-          <FormLabel lh="1%">COMPANY SIZE</FormLabel>
-          <Text fontSize={"14px"} align={"left"} mt="1%">
-            So we can adapt to your needs better
-          </Text>
-          <Input
-            type="number"
-            onChange={handleChange}
-            name="companySize"
-            placeholder="No of member"
-          />
+          
         </FormControl>
 
         <FormLabel mt="1%">MOBILE NUMBER (OPTIONAL)</FormLabel>

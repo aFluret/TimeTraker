@@ -20,8 +20,8 @@ export default function Dashboard() {
     // console.log("in track page----->",token)
     getUserName(token)
       .then((res) => {
-        // console.log("user name--->", res.data[0].companyID.name);
-        setUserName(res.data[0].companyID.name);
+        // console.log("user name--->", res.data[0].userId.name);
+        setUserName(res.data[0].userId.name);
       })
       .catch((err) => {
         console.log(err);

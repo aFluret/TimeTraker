@@ -31,3 +31,32 @@ export const SignUp = (data) => async (dispatch) => {
     console.log(err);
   }
 };
+
+export const EditUserQuery = (data) => async (dispatch) => {
+  console.log(data);
+
+  try {
+    let response = await axios.patch(
+      `http://localhost:8080/company/profile/${data._id}`,
+      data
+    );
+
+    console.log(response);
+    // dispatch({ type: AUTH_POSTDATA, payload: response.data });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+
+export const DeleteUser = (id) => async (dispatch) => {
+  try {
+     await axios.delete(
+      `http://localhost:8080/company/profile/${id}`,
+    );
+
+    // dispatch({ type: AUTH_POSTDATA, payload: response.data });
+  } catch (err) {
+    console.log(err);
+  }
+};

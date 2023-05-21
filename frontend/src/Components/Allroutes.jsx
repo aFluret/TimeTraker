@@ -11,6 +11,8 @@ import ProjectForm from "./ProjectsPages/ProjectForm"
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
 import Tasks from "./ProjectsPages/Tasks"
+import Users from "./ProjectsPages/Users";
+import EditUser from "./EditUser";
 
 function Allroutes() {
   return (
@@ -38,6 +40,15 @@ function Allroutes() {
           }
         />
         <Route
+          path="/dashboard/users"
+          element={
+            <PrivateRoute>
+
+            <Users />
+             </PrivateRoute>
+          }
+        />
+        <Route
           path="/projectCreation"
           element={
             <PrivateRoute>
@@ -59,6 +70,14 @@ function Allroutes() {
           element={
             <PrivateRoute>
             <Tasks />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/dashboard/editUser"
+          element={
+            <PrivateRoute>
+            <EditUser />
             </PrivateRoute>
           }
         />

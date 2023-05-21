@@ -9,15 +9,17 @@ import {
   Input,
   Text,
 } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import React, { useContext } from "react";
 import { useState } from "react";
 import { AuthContext } from "./AuthContext";
 
 function SignUp() {
   const maindata = useContext(AuthContext);
+  const {state} = useLocation();
+  let isUser = state?.isUser;
 
-  const [data, setData] = useState(maindata.isAuthData);
+  const [data, setData] = useState({...maindata.isAuthData, isUser});
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -36,12 +38,12 @@ function SignUp() {
         <Image
           align={"left"}
           w="200px"
-          src="https://app.myhours.com/assets/myhours_app_logo_icon.svg"
+          src="https://img.freepik.com/premium-vector/clock-vector-illustration-on-white-background-office-clock-illustration-countdown-clock-counter-timer-countdown-art-design-eps-10_158224-116.jpg"
           alt="company logo"
         />
         <br />
         <Heading as="h3" size="lg" fontWeight={"600"} align={"left"}>
-          Welcome to My Hours
+          {isUser ? 'Регистрация пользователя' : 'Регистрация админа '}
         </Heading>
         <br />
         <FormControl>

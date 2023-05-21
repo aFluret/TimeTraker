@@ -8,9 +8,8 @@ const initial = {
   name: "",
   email: "",
   mobileNumber: "",
-  companySize: "",
-  country: "",
-  companyName: "",
+  job: "",
+  isAdmin: false,
 };
 
 function AuthContextProvider(props) {

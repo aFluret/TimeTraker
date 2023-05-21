@@ -13,7 +13,7 @@ const projectSchema = new mongoose.Schema({
     ref: "users",
     required: true,
   },
-  hours: { type: Array, required: true },
+  hours: { type: Number, required: true },
   billingAmount: { type: Number, required: true },
   budgetSpent: { type: Number, required: true },
   createdOn: { type: String, default: Date.now , required: true },

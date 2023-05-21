@@ -9,62 +9,17 @@ import HoursForm from "./HoursForm";
 
 export default function Track({ userName }) {
 
-  const [mon, setMon] = useState("0:00");
-  const [tue, setTue] = useState("0:00");
-  const [wed, setWed] = useState("0:00");
-  const [thu, setThu] = useState("0:00");
-  const [fri, setFri] = useState("0:00");
-  const [totalBudget, setTotalBudget] = useState(0);
+  const [hours, setHours] = useState([0,0,0,0,0]);
+
+
   const [formArr, setformArr] = useState([1]);
-  const budgetDates = [
-    "Mon, day-1",
-    "Tue, day-2",
-    "Wed, day-3",
-    "Thu, day-4",
-    "Fri, day-5",
-  ];
-  const budgetDatesValues = [mon, tue, wed, thu, fri];
 
-  let handleHours1 = (value) => {
-    setMon(value);
-    setTotalBudget((pre) => pre + +value);
-  };
 
-  let handleHours2 = (value) => {
-    setTue(value);
-    setTotalBudget((pre) => pre + +value);
-  };
-  let handleHours3 = (value) => {
-    setWed(value);
-    setTotalBudget((pre) => pre + +value);
-  };
-  let handleHours4 = (value) => {
-    setThu(value);
-    setTotalBudget((pre) => pre + +value);
-  };
-  let handleHours5 = (value) => {
-    setFri(value);
-    setTotalBudget((pre) => pre + +value);
-  };
-
-  let handleHours = {
-    handleHours1,
-    handleHours2,
-    handleHours3,
-    handleHours4,
-    handleHours5,
-  };
-
-  const handleForm = () => {
-    let temArr = formArr;
-    temArr.push(temArr.length + 1);
-    setformArr(temArr);
-  };
 
 
   return (
     <div className="track">
-      <h2 className="track-title">Weekly timesheet</h2>
+      <h2 className="track-title">Недельный табель</h2>
       <section className="weeks-area">
         <div className="track-dates">
           <Button
@@ -78,7 +33,7 @@ export default function Track({ userName }) {
               borderBottomLeftRadius: "5px",
             }}
           >
-            <i class="bi-arrow-left"></i>
+            <i className="bi-arrow-left"></i>
           </Button>
 
           <i
@@ -86,7 +41,7 @@ export default function Track({ userName }) {
               fontSize: "20px",
               marginLeft: "10px",
             }}
-            class="bi-calendar2-check"
+            className="bi-calendar2-check"
           ></i>
           <span> This, week, 26 Sep - 2 Oct 2022 </span>
           <Button
@@ -101,29 +56,20 @@ export default function Track({ userName }) {
               borderBottomRightRadius: "5px",
             }}
           >
-            <i class="bi-arrow-right"></i>
+            <i className="bi-arrow-right"></i>
           </Button>
         </div>
 
         <div className="track-user">
           <i
             style={{ fontSize: "23px", marginLeft: "5px" }}
-            class="bi-person"
+            className="bi-person"
           ></i>
           <div style={{ width: "82%" }}>
             <span style={{ margin: "auto", marginLeft: "5%" }}>{userName}</span>
           </div>
-          <i style={{ fontSize: "15px" }} class="bi-caret-right-fill"></i>
+          <i style={{ fontSize: "15px" }} className="bi-caret-right-fill"></i>
         </div>
-
-        <Button style={{ backgroundColor: "#dceefa", marginLeft: "18rem" }}>
-          {" "}
-          <i style={{ paddingRight: "10px" }} class="bi-stopwatch"></i> Timer
-        </Button>
-        <Button style={{ backgroundColor: "#dceefa", marginLeft: "15px" }}>
-          {" "}
-          <i class="bi-gear"></i>
-        </Button>
       </section>
       <Divider
         borderColor="gray"
@@ -132,28 +78,7 @@ export default function Track({ userName }) {
         marginLeft="30px"
       />
       <section className="client-projects">
-        <div className="budget-title">
-          <div className="budget-dates">
-            {budgetDates.map((dates, ind) => (
-              <span key={ind}>{dates}</span>
-            ))}
-          </div>
-          <span style={{ fontSize: "20px" }}>Total Budget</span>
-        </div>
-        <div className="budget-values">
-          <span style={{ fontSize: "20px" }}>Client & Project</span>
-          <span style={{ fontSize: "20px", marginLeft: "10rem" }}>Task</span>
-          <div className="budget-dates-values">
-            {budgetDatesValues.map((dates, ind) => (
-              <span key={ind}>{dates}</span>
-            ))}
-          </div>
-          <span
-            style={{ fontSize: "22px", marginLeft: "25px", fontWeight: "600" }}
-          >
-            {totalBudget || "00:00"}
-          </span>
-        </div>
+        
       </section>
       <Divider
         borderColor="gray"
@@ -166,29 +91,12 @@ export default function Track({ userName }) {
           formArr.map((i, ind) => (
             <HoursForm
               key={ind}
-              totalBudget={totalBudget}
-              handleHours={handleHours}
+              hours={hours}
+              handleHours={setHours}
               i={i}
             />
           ))}
       </Box>
-      <Text
-        onClick={handleForm}
-        fontSize="md"
-        display="flex"
-        alignItems="center"
-        color="skyblue"
-        cursor="pointer"
-        mt="5px"
-        ml="2%"
-      >
-        {" "}
-        <i
-          style={{ fontSize: "25px", paddingRight: "10px" }}
-          class="bi-plus"
-        ></i>{" "}
-        Add timesheet row
-      </Text>
     </div>
   );
 }

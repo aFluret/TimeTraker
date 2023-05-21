@@ -19,12 +19,12 @@ const getTaskName = (projectid) => {
   });
 };
 
-const updateHours = async (id, hours, token, budgetSpent) => {
+const updateHours = async (id, hours, token) => {
   let res = await axios({
     method: "PATCH",
     url: `http://localhost:8080/projects/${id}`,
     headers: { token: token },
-    data: { hours: hours, billingAmount: +budgetSpent * +hours },
+    data: { hours: hours },
   });
   return res;
 };
@@ -41,15 +41,14 @@ const getProject = async (id, token) => {
   return res.data;
 };
 
-export default function HoursForm({ totalBudget, handleHours, i }) {
+export default function HoursForm({ handleHours, i, hours }) {
   const [projectNames, setProjectNames] = useState([]);
   const [taskNames, setTaskNames] = useState([]);
   const [token, setToken] = useState(null);
 
   const [selectProjectInd, setSelectProjectInd] = useState(null);
   const [projectid, setProjectid] = useState(null);
-  let { handleHours1, handleHours2, handleHours3, handleHours4, handleHours5 } =
-    handleHours;
+  
   let [alert, setAlert] = useState(false);
   let [isError, setIsError] = useState(false);
   let [budgetSpent, setBudgetSpent] = useState(0);
@@ -75,28 +74,13 @@ export default function HoursForm({ totalBudget, handleHours, i }) {
       });
   };
 
-  const handleTaskName = () => {
-    getProject(projectid, token)
-      .then((res) => {
-        // console.log("One project-->", res);
-        setBudgetSpent(res.budgetSpent);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-
-    getTaskName(projectid)
-      .then((res) => {
-        // console.log("res--->", res.data);
-        setTaskNames(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  const handleDayHoursFabric = (index) => (value = 0) => {
+    hours[index] = value;
+    handleHours([...hours]);
+  }
 
   const handleUpdateHours = () => {
-    updateHours(projectid, totalBudget, token, budgetSpent)
+    updateHours(projectid, hours, token)
       .then((res) => {
         // console.log("updated project-->",res.data);
         setAlert(true);
@@ -132,22 +116,8 @@ export default function HoursForm({ totalBudget, handleHours, i }) {
             ))}
         </Select>
 
-        <Select
-          width="15%"
-          ml="6px"
-          h="35px"
-          fontFamily="mono"
-          placeholder="Select/create a..."
-          onClick={handleTaskName}
-        >
-          {taskNames &&
-            taskNames.map((task) => (
-              <option value="option1"> {task.task}</option>
-            ))}
-        </Select>
-
         <Input
-          onChange={(e) => handleHours1(e.target.value)}
+          onChange={(e) => handleDayHoursFabric(0)(e.target.value)}
           width="8%"
           ml="13px"
           h="35px"
@@ -155,28 +125,28 @@ export default function HoursForm({ totalBudget, handleHours, i }) {
         />
 
         <Input
-          onChange={(e) => handleHours2(e.target.value)}
+          onChange={(e) =>  handleDayHoursFabric(1)(e.target.value)}
           width="8%"
           ml="13px"
           h="35px"
           placeholder="hh"
         />
         <Input
-          onChange={(e) => handleHours3(e.target.value)}
+          onChange={(e) =>  handleDayHoursFabric(2)(e.target.value)}
           width="8%"
           ml="8px"
           h="35px"
           placeholder="hh"
         />
         <Input
-          onChange={(e) => handleHours4(e.target.value)}
+          onChange={(e) =>  handleDayHoursFabric(3)(e.target.value)}
           width="8%"
           ml="8px"
           h="35px"
           placeholder="hh"
         />
         <Input
-          onChange={(e) => handleHours5(e.target.value)}
+          onChange={(e) =>  handleDayHoursFabric(4)(e.target.value)}
           width="8%"
           ml="9px"
           h="35px"

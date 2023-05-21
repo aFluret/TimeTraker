@@ -33,38 +33,38 @@ import axios from "axios";
 import Sidebar from "../Sidebar";
 import { useContext } from "react";
 import { AppContext } from "../../context/Appcontext";
+import { useDispatch } from "react-redux";
+import { DeleteUser } from "../auth/auth.action";
 
-export const getProjects = async (url) => {
+export const getUsers = async (url) => {
   let token = JSON.parse(localStorage.getItem("token"));
-  let res = await axios.get(url, {
+  return await axios.get("http://localhost:8080/company/", {
     headers: {
       token: token,
     },
   });
-  // console.log("token:", token);
-  return res.data;
 };
 
-export default function Projects() {
-  const [projects, setProjects] = useState([]);
+export default function Users() {
+  const [users, setUsers] = useState([]);
   const url = "http://localhost:8080/projects";
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const onChange = (e) => {
-    // setQuery(e.target.value);
-    // console.log(query);
-    getProjects(`${url}?q=${e.target.value}`).then((res) => setProjects(res));
+    getUsers(`${url}`).then((res) => setUsers(res));
   };
-  console.log("Porj :", projects);
-  {
-    /** useEffetcts for component*/
-  }
-  const onClick = (id) => {
-    localStorage.setItem("projectId", id);
-  };
+  console.log("Porj :", users);
+ 
   useEffect(() => {
-    getProjects(url).then((res) => setProjects(res));
+   getUsers().then(res => {
+      setUsers(res?.data)
+     });
   }, []);
+
+  const handleDelete = (id) => {
+    dispatch(DeleteUser(id))
+  }
 
   return (
     <Flex>
@@ -72,7 +72,7 @@ export default function Projects() {
       <Box m={"30px"} w="85%">
         <Flex mb={"30px"}>
           <Text fontSize="4xl" fontWeight="500">
-            Табели
+            Сотрудники
           </Text>
           <Spacer />
           <Link to="/SignUp" state={{ isUser: true }}>
@@ -82,14 +82,8 @@ export default function Projects() {
                 Добавить нового сотрудника
               </Flex>
             </Button>
-          </Link>
-          <Link to="/projectCreation">
-            <Button bg={"#3B8FC2"} color="white">
-              <Flex align={"center"}>
-                <AddIcon mr="10px" />
-                Добавить новый табель
-              </Flex>
-            </Button>
+    
+      
           </Link>
         </Flex>
         <Flex align={"center"}>
@@ -125,35 +119,27 @@ export default function Projects() {
             {/* <TableCaption>Imperial to metric conversion factors</TableCaption> */}
             <Thead borderBottom={"1px solid lightGray"}>
               <Tr>
-                <Th>Код дела</Th>
-                <Th>Имя сотрудника</Th>
-                <Th>Количество часов</Th>
-                <Th>Начато</Th>
-                <Th>Закончено</Th>
-                <Th>Хз что</Th>
-                <Th>Статус</Th>
+                <Th>ФИО</Th>
+                <Th>Почта</Th>
+                <Th>Должность</Th>
+                <Th>Пользователь</Th>
+                <Th>Номер телефона</Th>
                 <Th>Действие</Th>
               </Tr>
             </Thead>
             <Tbody>
-              {projects.map((item) => (
+              { users?.map((item) => (
                 <Tr key={item._id}>
-                  <Td onClick={() => onClick(item._id)}>
-                    <Link to="/dashboard/projects/tasks">
-                      {item.projectname}
-                    </Link>
-                  </Td>
-                  <Td>{item.clientName}</Td>
-                  <Td>{item.hours}</Td>
-                  <Td>{item.billingAmount}</Td>
-                  <Td>{item.budgetSpent}</Td>
-                  <Td>{item.createdOn.slice(4, 16)}</Td>
-                  <Td>{item.status ? "Active" : "inActive"}</Td>
+                  <Td>{item?.name}</Td>
+                  <Td>{item?.email}</Td>
+                  <Td>{item?.job}</Td>
+                  <Td>{item?.isUser}</Td>
+                  <Td>{item?.mobileNumber}</Td>
                   <Td>
                     <Flex justifyContent={"space-evenly"}>
-                      <Image src={pen} w="16px" onClick={()=> navigate('/projectCreation', { state: { id: item._id }})}/>
+                      <Image src={pen} w="16px" onClick={()=> navigate('/dashboard/editUser', { state: { email: item.email, isUser: true }})}/>
                       <CopyIcon w="16px" />
-                      <Image src={box} />
+                      <Image src={box} onClick={()=> handleDelete(item._id)}/>
                     </Flex>
                   </Td>
                 </Tr>

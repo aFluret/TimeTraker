@@ -17,17 +17,14 @@ function Navbar() {
       <Box>
         <Image
           width="150px"
-          src="https://uploads-ssl.webflow.com/5c77a918ef19681741be7bca/5fd37c83dfa3ccb0d2d9836f_myhours-logo.svg"
+          src="https://img.freepik.com/premium-vector/clock-vector-illustration-on-white-background-office-clock-illustration-countdown-clock-counter-timer-countdown-art-design-eps-10_158224-116.jpg"
           alt="Logo"
         />
       </Box>
       <Box className="rightside">
-        <Box>How it Works</Box>
-        <Box>Use cases</Box>
-        <Box>Pricing</Box>
-        <Box>Support</Box>
+       
         <Box>
-          <Link to="/SignIn">Sign in</Link>
+          <Link to="/SignIn">Вход</Link>
         </Box>
         <Box
           className="navbtn"
@@ -38,7 +35,7 @@ function Navbar() {
           px={4}
           py={2}
         >
-          <Link to="/SignUp">Get My Hours Free</Link>
+          <Link to="/SignUp">Регистрация</Link>
         </Box>
       </Box>
     </Box>

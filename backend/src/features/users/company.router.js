@@ -6,7 +6,7 @@ const app = express.Router();
 // <-----Getting all the companies------>
 app.get('/' , async  (req , res) => {
   try {
-    let c = await Company.find( {} , {_id:0 , password:0});
+    let c = await Company.find( {} , {});
     // console.log('u:', u)
     res.send(c)
     
@@ -61,12 +61,32 @@ app.post("/signup", async (req, res) => {
 app.patch('/profile/:id' ,async (req , res) => {
   id = req.params.id;
   let uD = req.body;
+
   try {
     let uC = await Company.findByIdAndUpdate( id  ,uD,{new:true})
+    console.log(uC)
     res.send( uC)
   } catch (error) {
     res.status(404).send(error.message)
   }
 })
+
+
+app.delete("/profile/:id", async (req, res) => {
+  let { id } = req.params;
+  await Company.findOneAndRemove({ _id: id })
+    .then((user) => {
+      if (!user) {
+        res.status(400).send(id + " was not found");
+      } else {
+        res.status(200).send(id + " was deleted.");
+      }
+    })
+
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send("Error: " + err);
+    });
+});
 
 module.exports = app;

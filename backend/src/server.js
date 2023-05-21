@@ -3,7 +3,7 @@ const dbConnect = require("./config/db");
 
 const projectRouter = require("./features/project/project.router");
 
-const companyRouter = require("./features/company/company.router");
+const companyRouter = require("./features/users/company.router");
 
 const taskRouter = require("./features/tasks/task.router");
 

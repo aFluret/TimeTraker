@@ -8,7 +8,7 @@ app.use(projectMiddleware);
 //{ <--Getting  all the projects-->}
 app.get("/", async (req, res) => {
   const { status, orderBy = "status", order = "asc", q } = req.query;
-  console.log("status:", req.query);
+  // console.log("status:", req.query);
   let proj;
   if (status && status === "active") {
     try {
@@ -68,7 +68,6 @@ app.get("/", async (req, res) => {
 //Get api for a particulat proj ID
 app.get("/:id", async (req, res) => {
   let { id } = req.params;
-  debugger;
 
   await Project.findById(id)
     .populate("userId")

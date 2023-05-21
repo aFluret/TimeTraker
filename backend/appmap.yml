@@ -1,0 +1,5 @@
+name: backend
+packages:
+  - path: src
+language: javascript
+appmap_dir: tmp/appmap

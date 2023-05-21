@@ -51,7 +51,7 @@ function SignIn() {
           align={"center"}
           m="auto"
           w="200px"
-          src="https://app.myhours.com/assets/myhours_app_logo_icon.svg"
+          src="https://img.freepik.com/premium-vector/clock-vector-illustration-on-white-background-office-clock-illustration-countdown-clock-counter-timer-countdown-art-design-eps-10_158224-116.jpg"
           alt="company logo"
         />
         <br />
