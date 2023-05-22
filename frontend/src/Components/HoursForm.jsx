@@ -114,7 +114,7 @@ export default function HoursForm({ handleHours, i, hours }) {
           width="26%"
           h="35px"
           fontFamily="mono"
-          placeholder="Select/create a project..."
+          placeholder="Выбор кода дела"
         >
           {projectNames &&
             projectNames.map((name, ind) => (
@@ -129,7 +129,7 @@ export default function HoursForm({ handleHours, i, hours }) {
           width="8%"
           ml="13px"
           h="35px"
-          placeholder="hh"
+          placeholder="0"
         />
 
         <Input
@@ -137,28 +137,28 @@ export default function HoursForm({ handleHours, i, hours }) {
           width="8%"
           ml="13px"
           h="35px"
-          placeholder="hh"
+          placeholder="0"
         />
         <Input
           onChange={(e) => handleDayHoursFabric(2)(e.target.value)}
           width="8%"
           ml="8px"
           h="35px"
-          placeholder="hh"
+          placeholder="0"
         />
         <Input
           onChange={(e) => handleDayHoursFabric(3)(e.target.value)}
           width="8%"
           ml="8px"
           h="35px"
-          placeholder="hh"
+          placeholder="0"
         />
         <Input
           onChange={(e) => handleDayHoursFabric(4)(e.target.value)}
           width="8%"
           ml="9px"
           h="35px"
-          placeholder="hh"
+          placeholder="0"
         />
 
         <Button
@@ -167,7 +167,7 @@ export default function HoursForm({ handleHours, i, hours }) {
           colorScheme="teal"
           size="md"
         >
-          Update
+          Обновить
         </Button>
       </Box>
       <Divider borderColor="gray" mt={2} width="99.50%" />

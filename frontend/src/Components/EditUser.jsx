@@ -115,12 +115,12 @@ function EditUser() {
           
         </FormControl>
 
-        <FormLabel mt="1%">MOBILE NUMBER (OPTIONAL)</FormLabel>
+        <FormLabel mt="1%">Номер телефона</FormLabel>
 
         <Input
           type="number"
           onChange={handleDetailChange}
-          placeholder="Enter mobile"
+          placeholder=""
           name="mobileNumber"
           value={data?.mobileNumber}
         />

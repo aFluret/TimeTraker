@@ -21,44 +21,7 @@ export default function Track({ userName }) {
     <div className="track">
       <h2 className="track-title">Недельный табель</h2>
       <section className="weeks-area">
-        <div className="track-dates">
-          <Button
-            style={{
-              width: "30px",
-              height: "97%",
-              backgroundColor: "#ffffff",
-              borderRight: "1px solid gray",
-              borderRadius: "0px",
-              borderTopLeftRadius: "5px",
-              borderBottomLeftRadius: "5px",
-            }}
-          >
-            <i className="bi-arrow-left"></i>
-          </Button>
-
-          <i
-            style={{
-              fontSize: "20px",
-              marginLeft: "10px",
-            }}
-            className="bi-calendar2-check"
-          ></i>
-          <span> This, week, 26 Sep - 2 Oct 2022 </span>
-          <Button
-            style={{
-              width: "30px",
-              height: "97%",
-              marginLeft: "6px",
-              backgroundColor: "#ffffff",
-              borderLeft: "1px solid gray",
-              borderRadius: "0px",
-              borderTopRightRadius: "5px",
-              borderBottomRightRadius: "5px",
-            }}
-          >
-            <i className="bi-arrow-right"></i>
-          </Button>
-        </div>
+       
 
         <div className="track-user">
           <i

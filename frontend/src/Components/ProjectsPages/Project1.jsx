@@ -76,12 +76,6 @@ export default function Projects() {
           </Text>
           <Spacer />
           <Link to="/SignUp" state={{ isUser: true }}>
-            <Button bg={"#3B8FC2"} color="white">
-              <Flex align={"center"}>
-                <AddIcon mr="10px" />
-                Добавить нового сотрудника
-              </Flex>
-            </Button>
           </Link>
           <Link to="/projectCreation">
             <Button bg={"#3B8FC2"} color="white">

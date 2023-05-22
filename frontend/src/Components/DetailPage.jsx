@@ -75,18 +75,18 @@ function DetailPage() {
           
         </FormControl>
 
-        <FormLabel mt="1%">MOBILE NUMBER (OPTIONAL)</FormLabel>
+        <FormLabel mt="1%">Номер телефона</FormLabel>
 
         <Input
           type="number"
           onChange={handleChange}
-          placeholder="Enter mobile"
+          placeholder=""
           name="mobileNumber"
         />
 
         <Button color="white" bg="#3B8FC2" m="auto" mt="5%">
           <Link to="/" onClick={handleClick}>
-            Create New Company
+            Создать учетную запись
           </Link>
         </Button>
       </Box>

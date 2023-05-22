@@ -18,22 +18,22 @@ function Home() {
           mt="60px"
         >
           <Box as="span" fontWeight="600" ml="1%" mr="1%">
-            Organize
+          Учет 
           </Box>
-          projexts,
+          табелей,
           <Box as="span" fontWeight="600" ml="1%">
-            Track
+          отслеживание  	&#160;
           </Box>
-          time and
+           времени и
           <Box as="span" fontWeight="600" ml="1%" mr="1%">
-            Report
+            отчет о
           </Box>
-          you work.
+          вашей работе.
         </Text>
         <br />
         <Text fontSize="28px" m="auto" align="center">
-          Coordinate projects and tasks. Track your work hours and create
-          awesome-looking reports for clients.{" "}
+        Отслеживайте свое рабочее время и создавайте отчеты.
+        Все в одном  программном обеспечении для учета рабочего времени..{" "}
           <Box as="span" fontWeight="600" color="#375D75">
             All-in-one free time tracking software.
           </Box>

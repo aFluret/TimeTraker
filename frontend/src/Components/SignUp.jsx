@@ -44,32 +44,32 @@ function SignUp() {
         />
         <br />
         <Heading as="h3" size="lg" fontWeight={"600"} align={"left"}>
-          {isUser ? 'Регистрация пользователя' : 'Регистрация админа '}
+          {isUser ? 'Добавление пользователя' : 'Регистрация админа '}
         </Heading>
         <br />
         <FormControl>
-          <FormLabel>Full Name</FormLabel>
-          <Text align={"left"}>So we know what to call you in the app</Text>
+          <FormLabel>ФИО</FormLabel>
+          <Text align={"left"}></Text>
           <Input type="text" name="name" onChange={handleChange} />
-          <FormLabel>Email</FormLabel>
-          <Text align={"left"}>You will use this email to login</Text>
+          <FormLabel>Почта</FormLabel>
+          <Text align={"left"}>Используется при входе в учетную запись</Text>
           <Input type="email" name="email" onChange={handleChange} />
 
-          <FormLabel lh="1%">Password</FormLabel>
+          <FormLabel lh="1%">Пароль</FormLabel>
           <Input
-            placeholder=" Set Password"
+            placeholder=" "
             type="password"
             name="password"
             onChange={handleChange}
           />
         </FormControl>
         <Text fontSize={"14px"} align={"left"} mt="1%">
-          By Signing up you agree to the Tearms of use
+         
         </Text>
 
         <Button color="white" bg="#3B8FC2" m="auto" mt="5%">
           <Link to="/detail" onClick={handleClick}>
-            Next
+            Следующая
           </Link>
         </Button>
       </Box>
