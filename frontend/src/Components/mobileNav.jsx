@@ -18,7 +18,7 @@ function MobileNav() {
     <>
     <Container align="left" className="MobileNav">
       <Box  display={"flex"} justifyContent="space-between" mt={"3%"} >
-        <Image width="35%" src="https://img.freepik.com/premium-vector/clock-vector-illustration-on-white-background-office-clock-illustration-countdown-clock-counter-timer-countdown-art-design-eps-10_158224-116.jpg"></Image>
+        <Image width="35%" src={require('./hours.png')} ></Image>
         <Menu>
   <MenuButton
     as={IconButton}

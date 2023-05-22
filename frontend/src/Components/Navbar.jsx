@@ -16,8 +16,10 @@ function Navbar() {
     >
       <Box>
         <Image
-          width="150px"
-          src="https://img.freepik.com/premium-vector/clock-vector-illustration-on-white-background-office-clock-illustration-countdown-clock-counter-timer-countdown-art-design-eps-10_158224-116.jpg"
+          width="150px" 
+         // src="https://img.freepik.com/premium-vector/clock-vector-illustration-on-white-background-office-clock-illustration-countdown-clock-counter-timer-countdown-art-design-eps-10_158224-116.jpg"
+           
+           src={require('./hours.png')} 
           alt="Logo"
         />
       </Box>

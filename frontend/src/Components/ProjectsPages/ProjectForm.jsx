@@ -94,6 +94,7 @@ function ProjectForm({ location }) {
     }).catch(error => {
       console.log(error);
     });
+    alert("Табель добавлен успешно!");
 
     // console.log(res.data);
     navigate("/dashboard/projects");

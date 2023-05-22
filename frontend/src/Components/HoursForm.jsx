@@ -48,8 +48,8 @@ export default function HoursForm({ handleHours, i, hours }) {
 
   const [selectProjectInd, setSelectProjectInd] = useState(null);
   const [projectid, setProjectid] = useState(null);
-  
-  let [alert, setAlert] = useState(false);
+
+  let [alertflag, setAlertFlag] = useState(false);
   let [isError, setIsError] = useState(false);
   let [budgetSpent, setBudgetSpent] = useState(0);
 
@@ -74,18 +74,26 @@ export default function HoursForm({ handleHours, i, hours }) {
       });
   };
 
-  const handleDayHoursFabric = (index) => (value = 0) => {
-    hours[index] = value;
-    handleHours([...hours]);
-  }
+  const handleDayHoursFabric =
+    (index) =>
+    (value = 0) => {
+      hours[index] = value;
+      handleHours([...hours]);
+    };
 
   const handleUpdateHours = () => {
+    const totalHours = hours.reduce((prev, cur) => prev + Number(cur), 0);
+    if (totalHours < 40) {
+      alert("Указанное время меньше 40 часов ");
+      return;
+    }
+
     updateHours(projectid, hours, token)
       .then((res) => {
         // console.log("updated project-->",res.data);
-        setAlert(true);
+        setAlertFlag(true);
         setTimeout(() => {
-          setAlert(false);
+          setAlertFlag(false);
         }, 3000);
       })
       .catch((err) => {
@@ -125,28 +133,28 @@ export default function HoursForm({ handleHours, i, hours }) {
         />
 
         <Input
-          onChange={(e) =>  handleDayHoursFabric(1)(e.target.value)}
+          onChange={(e) => handleDayHoursFabric(1)(e.target.value)}
           width="8%"
           ml="13px"
           h="35px"
           placeholder="hh"
         />
         <Input
-          onChange={(e) =>  handleDayHoursFabric(2)(e.target.value)}
+          onChange={(e) => handleDayHoursFabric(2)(e.target.value)}
           width="8%"
           ml="8px"
           h="35px"
           placeholder="hh"
         />
         <Input
-          onChange={(e) =>  handleDayHoursFabric(3)(e.target.value)}
+          onChange={(e) => handleDayHoursFabric(3)(e.target.value)}
           width="8%"
           ml="8px"
           h="35px"
           placeholder="hh"
         />
         <Input
-          onChange={(e) =>  handleDayHoursFabric(4)(e.target.value)}
+          onChange={(e) => handleDayHoursFabric(4)(e.target.value)}
           width="8%"
           ml="9px"
           h="35px"
@@ -163,7 +171,7 @@ export default function HoursForm({ handleHours, i, hours }) {
         </Button>
       </Box>
       <Divider borderColor="gray" mt={2} width="99.50%" />
-      {alert ? (
+      {alertflag ? (
         <Alert status="success">
           <AlertIcon />
           Timesheet Updated

@@ -51,7 +51,8 @@ function SignIn() {
           align={"center"}
           m="auto"
           w="200px"
-          src="https://img.freepik.com/premium-vector/clock-vector-illustration-on-white-background-office-clock-illustration-countdown-clock-counter-timer-countdown-art-design-eps-10_158224-116.jpg"
+          //src="https://img.freepik.com/premium-vector/clock-vector-illustration-on-white-background-office-clock-illustration-countdown-clock-counter-timer-countdown-art-design-eps-10_158224-116.jpg"
+          src={require('./hours.png')} 
           alt="company logo"
         />
         <br />

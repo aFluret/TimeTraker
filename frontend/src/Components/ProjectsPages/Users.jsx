@@ -50,6 +50,7 @@ export default function Users() {
   const url = "http://localhost:8080/projects";
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [action, setAction] = useState(0)
 
   const onChange = (e) => {
     getUsers(`${url}`).then((res) => setUsers(res));
@@ -60,10 +61,12 @@ export default function Users() {
    getUsers().then(res => {
       setUsers(res?.data)
      });
-  }, []);
+  }, [action]);
 
   const handleDelete = (id) => {
-    dispatch(DeleteUser(id))
+    dispatch(DeleteUser(id));
+    setAction(action+1);
+    alert("Пользователь удален!")
   }
 
   return (
