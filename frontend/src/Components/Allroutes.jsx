@@ -13,6 +13,7 @@ import SignUp from "./SignUp";
 import Tasks from "./ProjectsPages/Tasks"
 import Users from "./ProjectsPages/Users";
 import EditUser from "./EditUser";
+import ProjectEdit from "./ProjectsPages/ProjectEdit";
 
 function Allroutes() {
   return (
@@ -30,6 +31,17 @@ function Allroutes() {
              </PrivateRoute>
           }
         />
+
+        <Route
+          path="/dashboard/projectEdit"
+          element={
+            <PrivateRoute>
+            <ProjectEdit />
+             </PrivateRoute>
+          }
+        />
+
+
         <Route
           path="/dashboard/projects"
           element={

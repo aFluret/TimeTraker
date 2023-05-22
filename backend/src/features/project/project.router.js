@@ -10,6 +10,7 @@ app.get("/", async (req, res) => {
   const { status, orderBy = "status", order = "asc", q } = req.query;
   console.log("status:", req.query);
   let proj;
+  
   if (status && status === "active") {
     try {
       proj = await Project.find({
@@ -31,6 +32,7 @@ app.get("/", async (req, res) => {
   } else if (q) {
     const { q } = req.query;
     let userId = req.userId;
+
     try {
       let items = await Project.find({
         $and: [
@@ -38,7 +40,7 @@ app.get("/", async (req, res) => {
           {
             $or: [
               { projectname: { $regex: q } },
-              { clientName: { $regex: q } },
+              { userName: { $regex: q } },
             ],
           },
         ],
@@ -50,13 +52,14 @@ app.get("/", async (req, res) => {
     }
   } else {
     try {
-      proj = await Project.find({ userId: req.userId })
+      const searchObject =( req.userId == '646a6559737ba79f59d6d3ae' ? {} : { userId: req.userId })
+      proj = await Project.find(searchObject)
         .populate("userId")
         .sort({
           [orderBy]: order == "asc" ? 1 : -1,
         });
       // console.log("proj:", proj);
-      // res.send(proj);
+      res.send(proj);
     } catch (error) {
       console.log("error:", error);
       res.status(500).send(error.message);
@@ -68,8 +71,6 @@ app.get("/", async (req, res) => {
 //Get api for a particulat proj ID
 app.get("/:id", async (req, res) => {
   let { id } = req.params;
-  debugger;
-
   await Project.findById(id)
     .populate("userId")
     .then((user) => {
@@ -86,12 +87,37 @@ app.get("/:id", async (req, res) => {
     });
 });
 
+
+//Get api for a particulat proj ID
+app.post("/search", async (req, res) => {
+  let { queryValue } = req.body;
+  try{
+
+  let projects = await Project.find( {} , {});
+
+    const project = projects.find((item) => {
+      return !!Object.values(item).find(elem => String(elem).includes(String(queryValue)))
+    })
+    console.log('search', project);
+
+      if (!project) {
+        res.status(404).send(id + " was not found");
+      } else {
+        res.status(200).send(project);
+      }
+    
+    } catch (err) {
+      console.error(err);
+      res.status(500).send("Error: " + err);
+    };
+});
+
 //{<-- Firing post req to create a new Proje-->}
 app.post("/new", async (req, res) => {
   let userId = req.userId;
-  let { projectname, clientName } = req.body;
+  let { projectname, userName, status } = req.body;
   try {
-    let proj = await Project.findOne({ projectname, clientName });
+    let proj = await Project.findOne({ projectname });
 
     if (proj) {
       return res.status(404).send("This Project already existing");
@@ -99,7 +125,7 @@ app.post("/new", async (req, res) => {
 
     let newProject = await Project.create({
       ...req.body,
-      userId: userId,
+      userId,
     });
 
     return res.send(newProject);
@@ -130,8 +156,11 @@ app.delete("/:id", async (req, res) => {
 //{<-- Firing Patch req for projectID -->}
 app.patch("/:id", async (req, res) => {
   let { id } = req.params;
-  console.log("id:", id);
   let updatedData = req.body;
+
+  if(req.body.status == 'Закрыто'){
+    updatedData.closeDate = String(Date.now());
+  }
 
   try {
     let updatedProject = await Project.findByIdAndUpdate(id, updatedData, {

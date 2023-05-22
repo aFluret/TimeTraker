@@ -4,8 +4,8 @@ import { useState , useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import Logout from './Logout';
 
-const getUserName = (token) => {
-  return axios.get(`http://localhost:8080/company`, {
+const getMyself = (token) => {
+  return axios.get(`http://localhost:8080/company/${token.split(':')[0]}`, {
     headers: { token: token },
   });
 };
@@ -13,18 +13,21 @@ const getUserName = (token) => {
 export default function Sidebar() {
 
   const [userName, setUserName] = useState(null);
+  const [user, setUser] = useState();
 
   useEffect(() => {
     let token = JSON.parse(localStorage.getItem("token"));
     // console.log("in track page----->",token)
-    getUserName(token)
+    getMyself(token)
       .then((res) => {
         // console.log("user name--->", res.data[0].userId.name);
-        setUserName(res.data[0]?.name); ///////////////////////////////////////////////////////////////////
+        setUserName(res.data.name); ///////////////////////////////////////////////////////////////////
+        setUser(res.data)
       })
       .catch((err) => {
         console.log(err);
       });
+      return () => {};
   }, []);
 
 
@@ -56,6 +59,13 @@ export default function Sidebar() {
     // { icon: "question-circle", title: "Help", location: "#",isLogout:false },
     // { icon: "phone", title: "Apps", location: "#",isLogout:false },
     // { icon: "bell", title: "What's new", location: "#",isLogout:false },
+    {
+      icon: "person",
+
+      marginLeft: "18px",
+      title: 'Профиль',
+      location: "/dashboard/editUser",
+    },
     {
       icon: "person",
       rIcon: "chevron-up",
@@ -104,35 +114,12 @@ export default function Sidebar() {
         ))}
       </div>
 
-      {/* <div className="box3">
-        <h5
-          style={{
-            width: "80%",
-            margin: "auto",
-            fontSize: "15px",
-            paddingTop: "15px",
-          }}
-        >
-          Pro trial expires in 13 days.
-        </h5>
-        <h3
-          style={{
-            marginLeft: "20px",
-            fontSize: "21px",
-            fontWeight: "500",
-            marginTop: "2px",
-          }}
-        >
-          Keep/leave the Pro
-        </h3>
-      </div> */}
-
       <div className="box4">
         {box4.map((item,ind) => (
           <div key={ind}>
             <div className="items">
               {  item.isLogout ? (<Logout userName={item.title}/>) :       
-              <Link  style={{ width: "100%" }} to={item.location}>
+              <Link  style={{ width: "100%" }} to={item.location} state={ { email: user?.email, isUser: true }}>
                 {" "}
                 <i
                   style={{ marginLeft: "20px", fontSize: "18px" }}

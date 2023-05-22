@@ -42,6 +42,7 @@ function EditUser() {
     getUsers().then(res => {
       setData(res?.data.find((item) => item.email == email))
       });
+    return () => {};
    }, []);
 
   const handleChange = (e) => {
@@ -106,7 +107,6 @@ function EditUser() {
             name="job"
             value={data?.job}
           >
-            <option>Выберите должность</option>
             <option value="Инспектор">Инспектор</option>
             <option value="Экономист">Экономист</option>
             <option value="Бухгалтер">Бухгалтер</option>

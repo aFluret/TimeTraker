@@ -60,6 +60,12 @@ export default function Reports() {
     sheet: 'Отчёт 43534534534543'
 })
 
+const getStatusColor = (status) => {
+  if(status == 'Закрыто') return 	'#880808';
+  if(status == 'Активно') return 	'#00FF00';
+  if(status == 'Готово') return 	'##FFFF00';
+}
+
   // console.log("tokrn :", token);
   return (
     <>
@@ -96,7 +102,6 @@ export default function Reports() {
                       <Th>Четверг</Th>
                       <Th>Пятница</Th>
                       <Th>Статус</Th>
-                      <Th>Отчет</Th>
                     </Tr>
                   </Thead>
                   <Tbody>
@@ -112,9 +117,7 @@ export default function Reports() {
                         <Td>{item.hours[2]}</Td>
                         <Td>{item.hours[3]}</Td>
                         <Td>{item.hours[4]}</Td>
-
-
-                        <Td>{item.status ? "Active" : "inActive"}</Td>
+                        <Td backgroundColor={getStatusColor(item.status)}>{item.status}</Td>
                       </Tr>
                     )})}
                   </Tbody>

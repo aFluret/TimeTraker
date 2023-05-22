@@ -110,7 +110,7 @@ function Tasks() {
             {project.projectname}
           </Text>
           <Text fontSize={"xl"} color="gray">
-            {project.clientName}
+            {project.userName}
           </Text>
         </Flex>
         <Text fontSize={"3xl"} fontWeight="500">

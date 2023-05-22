@@ -6,7 +6,7 @@ const mongoose = require("mongoose");
 // 2) can we provide min & max range to the array(team member)...?
 const projectSchema = new mongoose.Schema({
   projectname: { type: String, required: true },
-  clientName: { type: String, required: true },
+  userName: { type: String, required: true },
   description: { type: String },
   userId: {
     type: mongoose.Schema.Types.ObjectId,

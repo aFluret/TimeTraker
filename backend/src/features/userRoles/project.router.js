@@ -38,7 +38,7 @@ app.get("/", async (req, res) => {
           {
             $or: [
               { projectname: { $regex: q } },
-              { clientName: { $regex: q } },
+              { userName: { $regex: q } },
             ],
           },
         ],
@@ -88,9 +88,9 @@ app.get("/:id", async (req, res) => {
 //{<-- Firing post req to create a new Proje-->}
 app.post("/new", async (req, res) => {
   let userId = req.userId;
-  let { projectname, clientName } = req.body;
+  let { projectname, userName } = req.body;
   try {
-    let proj = await Project.findOne({ projectname, clientName });
+    let proj = await Project.findOne({ projectname, userName });
 
     if (proj) {
       return res.status(404).send("This Project already existing");

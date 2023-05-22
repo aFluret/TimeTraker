@@ -66,8 +66,6 @@ export default function HoursForm({ handleHours, i, hours }) {
         let oneItem = tempProjects.find((elem, ind) => ind == selectProjectInd);
 
         let projectid = oneItem._id;
-        // console.log("projectid-->", projectid);
-        setProjectid(projectid);
       })
       .catch((err) => {
         console.log(err);
@@ -110,7 +108,7 @@ export default function HoursForm({ handleHours, i, hours }) {
       <Box mt={2} display="flex" fontFamily="sans-serif" width="99.50%">
         <Select
           onClick={handleGetName}
-          onChange={(e) => setSelectProjectInd(e.target.value)}
+          onChange={(e) => {setProjectid(e.target.value); setSelectProjectInd(e.target.value)}}
           width="26%"
           h="35px"
           fontFamily="mono"
@@ -118,8 +116,8 @@ export default function HoursForm({ handleHours, i, hours }) {
         >
           {projectNames &&
             projectNames.map((name, ind) => (
-              <option value={ind}>
-                {name.projectname} - {name.projectname}
+              <option value={name._id}>
+                {name.projectname} - {name.userId.name}
               </option>
             ))}
         </Select>

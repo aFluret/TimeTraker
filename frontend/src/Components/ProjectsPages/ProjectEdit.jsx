@@ -15,6 +15,7 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
+
 export const getUsers = async (url) => {
   let token = JSON.parse(localStorage.getItem("token"));
   return await axios.get("http://localhost:8080/company/", {
@@ -32,48 +33,47 @@ export const getProjects = async (url) => {
       token: token,
     },
   });
-  // console.log("token:", token);
   return res.data;
 };
 
-const initialProject = {
-  projectname: "",
-  userId: "",
-  hours: 0,
-  createdON: Date(),
-  status: true,
-};
-
-function ProjectForm({ location }) {
+function ProjectEdit({ location }) {
+  let token = JSON.parse(localStorage.getItem("token"));
   const [users, setUsers] = useState([]);
-  const [project, setProject] = useState(initialProject);
+  const url = "http://localhost:8080/projects";
 
   const {state = {}} = useLocation();
   const editingId = state?.id;
-  console.log(editingId)
+  
+  const initialProject = {
+    projectname: "",
+    userId: "",
+    hours: 0,
+    createdON: Date(),
+    status: true,
+  };
+
+  const [project, setProject] = useState(initialProject);
 
   useEffect(() => {
-    getUsers(project.userId).then(res => {
-       setUsers(res?.data)
-      });
-      return () => {};
-   }, [project]);
-
-   
-   useEffect(() => {
     if(editingId){
-      getProjects(`http://localhost:8080/projects/${editingId}`).then(data => setProject(data));
+      getProjects(`http://localhost:8080/projects/${editingId}`).then((project => setProject(project)))
     }
     return () => {};
   }, []);
 
-  // const [radio, setRadio] = useState("1");
+  useEffect(() => {
+    if(project.userId)
+    getUsers(project.userId).then(res => {
+       setUsers(res?.data)
+      });
+
+      return () => {};
+   }, [project]);
+
   const navigate = useNavigate("/dashboard/project");
 
   const onChange = (e) => {
     const key = e.target?.name;
-    const value = e.target?.value;
-    const type = e.target?.type
     if(!key){
       setProject({
         ...project,
@@ -86,25 +86,23 @@ function ProjectForm({ location }) {
         [key]: e.target.value,
       });
     }
-
   };
 
   // const setTeam = (e) => {};
 
   const submit = async () => {
-    let token = JSON.parse(localStorage.getItem("token"));
     let res = await axios({
-      method: "POST",
+      method: "PATCH",
       headers: {
         token: token,
       },
-      url: "http://localhost:8080/projects/new",
+      url: `http://localhost:8080/projects/${editingId}`,
       data: project,
     }).catch(error => {
       console.log(error);
     });
-    alert("Табель добавлен успешно!");
-    alert('мазафака')
+
+    // console.log(res.data);
     navigate("/dashboard/projects");
   };
 
@@ -135,7 +133,7 @@ function ProjectForm({ location }) {
             value={project?.userId}
           >
             {users.map(item => {
-              return ( <option key={item._id} value={item._id}>{item.name}</option>)
+              return ( <option value={item._id}>{item.name}</option>)
             })}
           </Select>
         </Box>
@@ -151,7 +149,7 @@ function ProjectForm({ location }) {
               <Radio value="Активно" key={"status"}>
                 <Box ml="20px">
                   <Text>
-                  { "В работе"}
+                  { "Активно"}
                   </Text>
                 </Box>
               </Radio>
@@ -159,7 +157,7 @@ function ProjectForm({ location }) {
               <Radio value="Готово" key={"status"}>
                 <Box ml="20px">
                   <Text>
-                    Выполненно
+                  Готово
                   </Text>
                 </Box>
               </Radio>
@@ -182,4 +180,4 @@ function ProjectForm({ location }) {
   );
 }
 
-export default ProjectForm;
+export default ProjectEdit;

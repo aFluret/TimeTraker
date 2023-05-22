@@ -16,6 +16,19 @@ app.get('/' , async  (req , res) => {
   }
 })
 
+app.get('/:id' , async  (req , res) => {
+  const id = req.params.id;
+  try {
+    let c = await Company.findById( id);
+    // console.log('u:', u)
+    res.send(c)
+    
+  } catch (error) {
+    console.log('error:', error)
+    res.status(500).send(error.message)
+  }
+})
+
 
 // <-----Signin POST for the companies------>
 app.post("/signin", async (req, res) => {
@@ -36,10 +49,14 @@ app.post("/signin", async (req, res) => {
 });
 
 // <-----Signup POST for the companies------>
-app.post("/signup", async (req, res) => {
-  let { email } = req.body;
+app.post("/search", async (req, res) => {
+  let { queryValue } = req.body;
   try {
-    let company = await Company.findOne({ email });
+    let companies = await Company.find( {} , {});
+
+    const company = companies.find((item) => {
+      return !!Object.values(item).find(elem => String(elem).includes(String(queryValue)))
+    })
     if (company) {
       return res
         .status(404)
@@ -55,6 +72,7 @@ app.post("/signup", async (req, res) => {
     res.status(500).send(e.message);
   }
 });
+
 
 // <-----PATCH for the company----->
 

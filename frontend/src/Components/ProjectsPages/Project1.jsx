@@ -32,6 +32,7 @@ import axios from "axios";
 // import sidebar from "../Sidebar";
 import Sidebar from "../Sidebar";
 import { useContext } from "react";
+import moment from 'moment';
 import { AppContext } from "../../context/Appcontext";
 
 export const getProjects = async (url) => {
@@ -45,8 +46,18 @@ export const getProjects = async (url) => {
   return res.data;
 };
 
+export const getUsers = async (url) => {
+  let token = JSON.parse(localStorage.getItem("token"));
+  return await axios.get("http://localhost:8080/company/", {
+    headers: {
+      token: token,
+    },
+  });
+};
+
 export default function Projects() {
   const [projects, setProjects] = useState([]);
+  const [users, setUsers] = useState([]);
   const url = "http://localhost:8080/projects";
   const navigate = useNavigate();
 
@@ -55,16 +66,34 @@ export default function Projects() {
     // console.log(query);
     getProjects(`${url}?q=${e.target.value}`).then((res) => setProjects(res));
   };
-  console.log("Porj :", projects);
-  {
-    /** useEffetcts for component*/
-  }
+
+
+  useEffect(() => {
+    getUsers().then(res => {
+       setUsers(res?.data)
+      });
+      return () => {};
+   }, []);
+
   const onClick = (id) => {
     localStorage.setItem("projectId", id);
   };
+
   useEffect(() => {
     getProjects(url).then((res) => setProjects(res));
+    return () => {};
   }, []);
+
+
+  const onDelete = async (id) => {
+    let token = JSON.parse(localStorage.getItem("token"));
+    await axios.delete(`http://localhost:8080/projects/${id}`, {
+      headers: {
+        token: token,
+      },
+    });
+  };
+  
 
   return (
     <Flex>
@@ -124,7 +153,6 @@ export default function Projects() {
                 <Th>Количество часов</Th>
                 <Th>Начато</Th>
                 <Th>Закончено</Th>
-                <Th>Хз что</Th>
                 <Th>Статус</Th>
                 <Th>Действие</Th>
               </Tr>
@@ -137,17 +165,16 @@ export default function Projects() {
                       {item.projectname}
                     </Link>
                   </Td>
-                  <Td>{item.clientName}</Td>
+                  <Td>{item?.userId?.name}</Td>
                   <Td>{item.hours}</Td>
-                  <Td>{item.billingAmount}</Td>
-                  <Td>{item.budgetSpent}</Td>
-                  <Td>{item.createdOn.slice(4, 16)}</Td>
-                  <Td>{item.status ? "Active" : "inActive"}</Td>
+                  <Td>{ moment(Number(item.createdOn)).format('l')}</Td>
+                  <Td>{ Number(item?.closeDate) ? moment(Number(item?.closeDate)).format('l') : 0}</Td>
+                  <Td>{item.status}</Td>
                   <Td>
                     <Flex justifyContent={"space-evenly"}>
-                      <Image src={pen} w="16px" onClick={()=> navigate('/projectCreation', { state: { id: item._id }})}/>
+                      <Image src={pen} w="16px" onClick={()=> navigate('/dashboard/projectEdit', { state: { id: item._id }})}/>
                       <CopyIcon w="16px" />
-                      <Image src={box} />
+                      <Image src={box} onClick={() => onDelete(item._id)}/>
                     </Flex>
                   </Td>
                 </Tr>

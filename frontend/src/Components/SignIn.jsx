@@ -31,6 +31,7 @@ function SignIn() {
       localStorage.setItem("token", JSON.stringify(token));
       navigate("/dashboard/projects");
     }
+    return () => {};
   }, [isAuth, token, setIsAuth]);
 
   const handleChange = (e) => {
