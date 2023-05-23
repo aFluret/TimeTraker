@@ -18,7 +18,7 @@ app.get("/", async (req, res) => {
       }).populate("userId");
       // res.send(proj);
     } catch (error) {
-      res.status(500).send(error.message);
+      return res.status(500).send(error.message);
     }
   } else if (status && status === "archived") {
     try {
@@ -27,7 +27,7 @@ app.get("/", async (req, res) => {
       }).populate("userId");
       // res.send(proj);
     } catch (error) {
-      res.status(500).send(error.message);
+      return  res.status(500).send(error.message);
     }
   } else if (q) {
     const { q } = req.query;
@@ -45,7 +45,7 @@ app.get("/", async (req, res) => {
           },
         ],
       }).populate("userId");
-      res.send(items);
+      return res.send(items);
     } catch (e) {
       // console.log(e.message);
       res.status(500).send(e);
@@ -59,7 +59,7 @@ app.get("/", async (req, res) => {
           [orderBy]: order == "asc" ? 1 : -1,
         });
       // console.log("proj:", proj);
-      res.send(proj);
+      return res.send(proj);
     } catch (error) {
       console.log("error:", error);
       res.status(500).send(error.message);
@@ -75,9 +75,9 @@ app.get("/:id", async (req, res) => {
     .populate("userId")
     .then((user) => {
       if (!user) {
-        res.status(404).send(id + " was not found");
+        return res.status(404).send(id + " was not found");
       } else {
-        res.status(200).send(user);
+        return res.status(200).send(user);
       }
     })
 
@@ -98,12 +98,11 @@ app.post("/search", async (req, res) => {
     const project = projects.find((item) => {
       return !!Object.values(item).find(elem => String(elem).includes(String(queryValue)))
     })
-    console.log('search', project);
 
       if (!project) {
-        res.status(404).send(id + " was not found");
+        return res.status(404).send(id + " was not found");
       } else {
-        res.status(200).send(project);
+        return res.status(200).send(project);
       }
     
     } catch (err) {

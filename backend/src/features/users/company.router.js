@@ -8,7 +8,7 @@ app.get('/' , async  (req , res) => {
   try {
     let c = await Company.find( {} , {});
     // console.log('u:', u)
-    res.send(c)
+    return res.send(c)
     
   } catch (error) {
     console.log('error:', error)
@@ -21,7 +21,7 @@ app.get('/:id' , async  (req , res) => {
   try {
     let c = await Company.findById( id);
     // console.log('u:', u)
-    res.send(c)
+    return res.send(c)
     
   } catch (error) {
     console.log('error:', error)
@@ -83,7 +83,7 @@ app.patch('/profile/:id' ,async (req , res) => {
   try {
     let uC = await Company.findByIdAndUpdate( id  ,uD,{new:true})
     console.log(uC)
-    res.send( uC)
+    return res.send( uC)
   } catch (error) {
     res.status(404).send(error.message)
   }
@@ -95,15 +95,15 @@ app.delete("/profile/:id", async (req, res) => {
   await Company.findOneAndRemove({ _id: id })
     .then((user) => {
       if (!user) {
-        res.status(400).send(id + " was not found");
+        return res.status(400).send(id + " was not found");
       } else {
-        res.status(200).send(id + " was deleted.");
+        return res.status(200).send(id + " was deleted.");
       }
     })
 
     .catch((err) => {
       console.error(err);
-      res.status(500).send("Error: " + err);
+      return res.status(500).send("Error: " + err);
     });
 });
 
