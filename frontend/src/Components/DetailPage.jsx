@@ -85,7 +85,7 @@ function DetailPage() {
         />
 
         <Button color="white" bg="#3B8FC2" m="auto" mt="5%">
-          <Link to="/" onClick={handleClick}>
+          <Link to="/dashboard/users" onClick={handleClick}>
             Создать учетную запись
           </Link>
         </Button>

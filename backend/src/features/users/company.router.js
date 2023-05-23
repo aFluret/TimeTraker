@@ -29,7 +29,6 @@ app.get('/:id' , async  (req , res) => {
   }
 })
 
-
 // <-----Signin POST for the companies------>
 app.post("/signin", async (req, res) => {
   let { email, password } = req.body;
@@ -49,7 +48,7 @@ app.post("/signin", async (req, res) => {
 });
 
 // <-----Signup POST for the companies------>
-app.post("/search", async (req, res) => {
+app.post("/signup", async (req, res) => {
   let { queryValue } = req.body;
   try {
     let companies = await Company.find( {} , {});
@@ -73,6 +72,29 @@ app.post("/search", async (req, res) => {
   }
 });
 
+
+// <-----Signup POST for the companies------>
+app.post("/new", async (req, res) => {
+  let { queryValue } = req.body;
+  try {
+    let companies = await Company.find( {} , {});
+
+    const company = companies.find((item) => {
+      return !!Object.values(item).find(elem => String(elem).includes(String(queryValue)))
+    })
+    if (company) {
+      return res
+        .status(404)
+        .send(
+          "Cannot create a company with existing email address, trying logging in using this email address"
+        );
+    }
+    let createdCompany = await Company.create(req.body);
+    res.send();
+  } catch (e) {
+    res.status(500).send(e.message);
+  }
+});
 
 // <-----PATCH for the company----->
 
