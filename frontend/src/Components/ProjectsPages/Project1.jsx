@@ -166,7 +166,7 @@ export default function Projects() {
                     </Link>
                   </Td>
                   <Td>{item?.userId?.name}</Td>
-                  <Td>{item.hours}</Td>
+                  <Td>{item.hours.reduce((prev, cur) => prev + Number(cur), 0)}</Td>
                   <Td>{ moment(Number(item.createdOn)).format('l')}</Td>
                   <Td>{ Number(item?.closeDate) ? moment(Number(item?.closeDate)).format('l') : 0}</Td>
                   <Td>{item.status}</Td>

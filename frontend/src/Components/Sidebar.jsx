@@ -61,7 +61,6 @@ export default function Sidebar() {
     // { icon: "bell", title: "What's new", location: "#",isLogout:false },
     {
       icon: "person",
-
       marginLeft: "18px",
       title: 'Профиль',
       location: "/dashboard/editUser",

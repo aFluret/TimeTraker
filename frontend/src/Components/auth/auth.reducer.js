@@ -1,4 +1,4 @@
-import { AUTH_POSTDATA, AUTH_SUCCESS } from "./auth.type";
+import { AUTH_POSTDATA, AUTH_SUCCESS, LOGOUT } from "./auth.type";
 
 let initialState = {
   token: "",
@@ -12,6 +12,11 @@ export const loginReducer = (state = initialState, action) => {
         ...state,
         token: action.payload,
         isAuth: true,
+      };
+    }
+    case LOGOUT: {
+      return {
+        initialState
       };
     }
    

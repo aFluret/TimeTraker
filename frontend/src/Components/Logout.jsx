@@ -12,10 +12,15 @@ import {
 } from "@chakra-ui/react";
 import { useContext } from "react";
 import { AppContext } from "../context/Appcontext";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { LOGOUT } from "./auth/auth.type";
 
 export default function Logout({ userName }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = React.useRef();
+  const dispatch = useDispatch();
+  const navigate = useNavigate()
   let { setIsAuth } = useContext(AppContext);
 
   return (
@@ -49,7 +54,7 @@ export default function Logout({ userName }) {
               <Button ref={cancelRef} onClick={onClose}>
                 Cancel
               </Button>
-              <Button colorScheme="red" onClick={() => setIsAuth(false)} ml={3}>
+              <Button colorScheme="red" onClick={() => {setIsAuth(false); dispatch(LOGOUT); navigate('/')}} ml={3}>
                 Logout
               </Button>
             </AlertDialogFooter>
